@@ -1,6 +1,6 @@
 {
   "name": "@danyiel-colin/tree-sitter-toon",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "description": "Tree-sitter grammar for TOON (Token-Oriented Object Notation)",
   "repository": {
     "type": "git",
