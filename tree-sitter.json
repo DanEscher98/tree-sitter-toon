@@ -18,11 +18,11 @@
     "description": "Tree-sitter grammar for TOON (Token-Oriented Object Notation)",
     "authors": [
       {
-        "name": "Your Name"
+        "name": "DanEscher98"
       }
     ],
     "links": {
-      "repository": "https://github.com/your-username/tree-sitter-toon"
+      "repository": "https://github.com/DanEscher98/tree-sitter-toon"
     }
   },
   "bindings": {

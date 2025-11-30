@@ -1,0 +1,326 @@
+================================================================================
+Unquoted string with dot (abbreviation)
+================================================================================
+name: Dr. Amanda Roberts
+--------------------------------------------------------------------------------
+
+(document
+  (object
+    (pair
+      key: (key
+        (identifier))
+      value: (unquoted_string))))
+
+================================================================================
+Unquoted string with at symbol (email/handle)
+================================================================================
+bio: Published by @JSTOR
+--------------------------------------------------------------------------------
+
+(document
+  (object
+    (pair
+      key: (key
+        (identifier))
+      value: (unquoted_string))))
+
+================================================================================
+Unquoted string with semicolon
+================================================================================
+info: ISSN 2334-3745; Editor-in-Chief
+--------------------------------------------------------------------------------
+
+(document
+  (object
+    (pair
+      key: (key
+        (identifier))
+      value: (unquoted_string))))
+
+================================================================================
+Unquoted string with asterisk and ampersand
+================================================================================
+topics: English * cultural studies film & gender
+--------------------------------------------------------------------------------
+
+(document
+  (object
+    (pair
+      key: (key
+        (identifier))
+      value: (unquoted_string))))
+
+================================================================================
+Unquoted string with parentheses
+================================================================================
+role: Professor (emeritus)
+--------------------------------------------------------------------------------
+
+(document
+  (object
+    (pair
+      key: (key
+        (identifier))
+      value: (unquoted_string))))
+
+================================================================================
+Unquoted string with hash symbol
+================================================================================
+tags: research #openaccess #science
+--------------------------------------------------------------------------------
+
+(document
+  (object
+    (pair
+      key: (key
+        (identifier))
+      value: (unquoted_string))))
+
+================================================================================
+Unquoted string with plus and equals
+================================================================================
+formula: a + b = c
+--------------------------------------------------------------------------------
+
+(document
+  (object
+    (pair
+      key: (key
+        (identifier))
+      value: (unquoted_string))))
+
+================================================================================
+Unquoted string with single quotes
+================================================================================
+title: The 'best' solution
+--------------------------------------------------------------------------------
+
+(document
+  (object
+    (pair
+      key: (key
+        (identifier))
+      value: (unquoted_string))))
+
+================================================================================
+Unquoted string with exclamation and question marks
+================================================================================
+message: Hello! How are you?
+--------------------------------------------------------------------------------
+
+(document
+  (object
+    (pair
+      key: (key
+        (identifier))
+      value: (unquoted_string))))
+
+================================================================================
+Unquoted string with percent symbol
+================================================================================
+stat: Success rate 95%
+--------------------------------------------------------------------------------
+
+(document
+  (object
+    (pair
+      key: (key
+        (identifier))
+      value: (unquoted_string))))
+
+================================================================================
+Unquoted string with dollar and caret
+================================================================================
+regex: Pattern $var and ^start
+--------------------------------------------------------------------------------
+
+(document
+  (object
+    (pair
+      key: (key
+        (identifier))
+      value: (unquoted_string))))
+
+================================================================================
+Unquoted string with tilde
+================================================================================
+path: Home ~ directory
+--------------------------------------------------------------------------------
+
+(document
+  (object
+    (pair
+      key: (key
+        (identifier))
+      value: (unquoted_string))))
+
+================================================================================
+Unquoted string with backtick
+================================================================================
+code: Use `command` here
+--------------------------------------------------------------------------------
+
+(document
+  (object
+    (pair
+      key: (key
+        (identifier))
+      value: (unquoted_string))))
+
+================================================================================
+Tabular row with special characters - dot
+================================================================================
+data[1]:
+	Dr. Amanda Roberts
+--------------------------------------------------------------------------------
+
+(document
+  (object
+    (array_declaration
+      key: (key
+        (identifier))
+      (array_header
+        length: (integer))
+      content: (array_content
+        (tabular_row
+          (unquoted_string))))))
+
+================================================================================
+Tabular row with special characters - at symbol
+================================================================================
+handles[1]:
+	@username
+--------------------------------------------------------------------------------
+
+(document
+  (object
+    (array_declaration
+      key: (key
+        (identifier))
+      (array_header
+        length: (integer))
+      content: (array_content
+        (tabular_row
+          (unquoted_string))))))
+
+================================================================================
+Tabular row with special characters - semicolon
+================================================================================
+refs[1]:
+	ISSN 2334-3745; Editor
+--------------------------------------------------------------------------------
+
+(document
+  (object
+    (array_declaration
+      key: (key
+        (identifier))
+      (array_header
+        length: (integer))
+      content: (array_content
+        (tabular_row
+          (unquoted_string))))))
+
+================================================================================
+Tabular array with multiple columns containing special chars
+================================================================================
+users[2|]{handle,name,bio}:
+	omnivorousphd|Dr. Amanda Roberts|English * cultural studies; film & gender
+	test_user|John Smith|Research @university #openaccess
+--------------------------------------------------------------------------------
+
+(document
+  (object
+    (array_declaration
+      key: (key
+        (identifier))
+      (array_header
+        length: (integer)
+        delimiter: (delimiter_marker)
+        fields: (field_list
+          (field_name
+            (identifier))
+          (field_delimiter)
+          (field_name
+            (identifier))
+          (field_delimiter)
+          (field_name
+            (identifier))))
+      content: (array_content
+        (tabular_row
+          (unquoted_string)
+          (delimiter)
+          (unquoted_string)
+          (delimiter)
+          (unquoted_string))
+        (tabular_row
+          (unquoted_string)
+          (delimiter)
+          (unquoted_string)
+          (delimiter)
+          (unquoted_string))))))
+
+================================================================================
+Tabular array comma-delimited with special chars
+================================================================================
+items[2]:
+	hello@world.com,Dr. Smith
+	user;admin,Prof. Jones (ret.)
+--------------------------------------------------------------------------------
+
+(document
+  (object
+    (array_declaration
+      key: (key
+        (identifier))
+      (array_header
+        length: (integer))
+      content: (array_content
+        (tabular_row
+          (unquoted_string)
+          (delimiter)
+          (unquoted_string))
+        (tabular_row
+          (unquoted_string)
+          (delimiter)
+          (unquoted_string))))))
+
+================================================================================
+Unquoted string starting with at symbol
+================================================================================
+mention: @JohnDoe replied
+--------------------------------------------------------------------------------
+
+(document
+  (object
+    (pair
+      key: (key
+        (identifier))
+      value: (unquoted_string))))
+
+================================================================================
+Complex bio with emoji-like characters
+================================================================================
+bio: she/her * views mine
+--------------------------------------------------------------------------------
+
+(document
+  (object
+    (pair
+      key: (key
+        (identifier))
+      value: (unquoted_string))))
+
+================================================================================
+String with colon in middle (not URL)
+================================================================================
+note: ratio 1:2 in solution
+--------------------------------------------------------------------------------
+
+(document
+  (object
+    (pair
+      key: (key
+        (identifier))
+      value: (unquoted_string))))
+

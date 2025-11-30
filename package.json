@@ -1,33 +1,60 @@
 {
-  "name": "tree-sitter-toon",
-  "version": "0.1.0",
+  "name": "@danyiel-colin/tree-sitter-toon",
+  "version": "0.1.1",
   "description": "Tree-sitter grammar for TOON (Token-Oriented Object Notation)",
   "repository": {
     "type": "git",
-    "url": "https://github.com/DanEscher98/tree-sitter-toon"
+    "url": "git+https://github.com/DanEscher98/tree-sitter-toon.git"
   },
   "license": "MIT",
   "author": "DanEscher98",
+  "main": "bindings/node",
+  "types": "bindings/node",
   "keywords": [
+    "incremental",
+    "parsing",
     "tree-sitter",
-    "parser",
     "toon",
-    "json",
     "data-format"
   ],
   "files": [
     "grammar.js",
+    "tree-sitter.json",
+    "binding.gyp",
+    "prebuilds/**",
+    "bindings/node/*",
     "queries/*",
-    "src/**"
+    "src/**",
+    "*.wasm"
   ],
+  "dependencies": {
+    "node-addon-api": "^8.2.2",
+    "node-gyp-build": "^4.8.2"
+  },
   "devDependencies": {
+    "eslint": "^9.14.0",
+    "eslint-config-treesitter": "^1.0.2",
+    "prebuildify": "^6.0.1",
     "tree-sitter-cli": "^0.24.0"
   },
+  "peerDependencies": {
+    "tree-sitter": "^0.21.1"
+  },
+  "peerDependenciesMeta": {
+    "tree-sitter": {
+      "optional": true
+    }
+  },
   "scripts": {
+    "install": "node-gyp-build",
     "generate": "tree-sitter generate",
     "build": "tree-sitter generate",
+    "prestart": "tree-sitter build --wasm",
+    "start": "tree-sitter playground",
     "test": "tree-sitter test",
+    "test:node": "node --test bindings/node/*_test.js",
     "parse": "tree-sitter parse",
-    "highlight": "tree-sitter highlight"
+    "highlight": "tree-sitter highlight",
+    "lint": "eslint grammar.js"
   }
 }

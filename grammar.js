@@ -17,8 +17,8 @@ module.exports = grammar({
 
   // External scanner handles indentation-sensitive tokens
   externals: $ => [
-    $._newline,         // newline when indent stays same or decreases
-    $._newline_indent,  // newline followed by increased indent
+    $._newline, // newline when indent stays same or decreases
+    $._newline_indent, // newline followed by increased indent
     $._dedent,
   ],
 
@@ -227,7 +227,7 @@ module.exports = grammar({
 
     // Unquoted string - matches value content that isn't a number/boolean/null
     // After the key's colon, everything until delimiter/newline is the value
-    // Can contain colons (URLs), dots (versions), etc.
+    // Can contain colons (URLs), dots (versions), special chars (@, !, ?, /, etc.)
     // Cannot start with '-' (list_marker), space/tab (extras), or '"' (quoted)
     // Must exclude delimiters (comma, tab, pipe) to allow splitting
     // Tab must be excluded to work as delimiter
@@ -238,17 +238,27 @@ module.exports = grammar({
     // Patterns:
     // 1. Version strings like 1.0.0 - HIGH precedence to beat number
     // 2. Date/timestamps like 2025-01-15T10:30:00Z - HIGH precedence
-    // 3. Multi-word strings (contains space)
-    // 4. URLs/strings with colon not followed by space
+    // 3. General unquoted strings - can start with letters, @, or other allowed chars
+    //    and contain special characters like . ! ? / ; @ * & ( ) # $ % ^ ~ ` ' : etc.
     unquoted_string: $ => choice(
       // Pattern 1: version strings - HIGH precedence to beat number
       token(prec(2, /[0-9]+\.[0-9]+\.[0-9][^\n\r\[\]\{\},"|\\	]*/)),
       // Pattern 2: date strings - HIGH precedence to beat number
       token(prec(2, /[0-9]+\-[0-9]+\-[0-9]+[^\n\r\[\]\{\},"|\\	]*/)),
-      // Pattern 3: multi-word strings (contains space)
+      // Pattern 3: General unquoted string starting with @ (handles @username, @mention)
+      // Must have content after @ to avoid matching bare @
+      token(/@[^\n\r\[\]\{\},"|\\	]+/),
+      // Pattern 4: String starting with letter/underscore that contains special chars
+      // This matches strings like "Dr. Smith", "Hello! World?", "she/her", etc.
+      // The key is: starts with identifier char, then has special char somewhere, then continues
+      // Special chars: . ! ? / ; @ * & ( ) # $ % ^ ~ ` ' + = < >
+      // NOTE: Colon (:) is NOT included here as it's the key-value separator.
+      // Colons in values are handled by Pattern 6 (URLs) or within multi-word strings.
+      token(/[a-zA-Z_][a-zA-Z0-9_]*[.!?\/;@*&()#$%^~`'+= <>-][^\n\r\[\]\{\},"|\\	]*/),
+      // Pattern 5: Multi-word strings (identifier followed by space and more content)
       // This catches "text value", "hello world", etc.
       token(/[a-zA-Z_][a-zA-Z0-9_]* [^\n\r\[\]\{\},"|\\	]+/),
-      // Pattern 4: string with colon NOT followed by space (like URLs https://...)
+      // Pattern 6: String with colon NOT followed by space (like URLs https://...)
       token(/[a-zA-Z_][a-zA-Z0-9_]*:[^ \n\r\[\]\{\},"|\\	][^\n\r\[\]\{\},"|\\	]*/),
     ),
 
