@@ -4,10 +4,10 @@
   "description": "Tree-sitter grammar for TOON (Token-Oriented Object Notation)",
   "repository": {
     "type": "git",
-    "url": "https://github.com/your-username/tree-sitter-toon"
+    "url": "https://github.com/DanEscher98/tree-sitter-toon"
   },
   "license": "MIT",
-  "author": "Your Name",
+  "author": "DanEscher98",
   "keywords": [
     "tree-sitter",
     "parser",

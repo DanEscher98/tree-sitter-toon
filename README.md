@@ -28,7 +28,7 @@ Tree-sitter grammar for [TOON](https://github.com/toon-format/spec) (Token-Orien
     local parser_config = require("nvim-treesitter.parsers").get_parser_configs()
     parser_config.toon = {
       install_info = {
-        url = "https://github.com/YOUR_USERNAME/tree-sitter-toon",
+        url = "https://github.com/DanEscher98/tree-sitter-toon",
         files = { "src/parser.c", "src/scanner.c" },
         branch = "main",
       },
@@ -53,7 +53,7 @@ use {
     local parser_config = require("nvim-treesitter.parsers").get_parser_configs()
     parser_config.toon = {
       install_info = {
-        url = "https://github.com/YOUR_USERNAME/tree-sitter-toon",
+        url = "https://github.com/DanEscher98/tree-sitter-toon",
         files = { "src/parser.c", "src/scanner.c" },
         branch = "main",
       },
