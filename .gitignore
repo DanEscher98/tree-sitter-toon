@@ -3,8 +3,21 @@ node_modules/
 
 # Build artifacts
 build/
+target/
 *.log
 *.wasm
+
+# Rust
+Cargo.lock
+
+# Python
+__pycache__/
+*.egg-info/
+dist/
+*.so
+
+# Go
+*.out
 
 # Editor
 .vscode/
