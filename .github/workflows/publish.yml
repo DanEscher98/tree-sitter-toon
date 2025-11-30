@@ -2,22 +2,25 @@ name: Publish packages
 
 on:
   push:
-    tags: ["*"]
+    tags: ["v*"]
 
 permissions:
   contents: write
-  id-token: write
-  attestations: write
 
 jobs:
-  github:
-    uses: tree-sitter/workflows/.github/workflows/release.yml@main
-    with:
-      generate: true
-      attestations: true
-  npm:
-    uses: tree-sitter/workflows/.github/workflows/package-npm.yml@main
-    secrets:
-      NODE_AUTH_TOKEN: ${{secrets.NPM_TOKEN}}
-    with:
-      generate: true
+  publish:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          registry-url: "https://registry.npmjs.org"
+      - name: Install dependencies
+        run: npm ci
+      - name: Publish to npm
+        run: npm publish --access public
+        env:
+          NODE_AUTH_TOKEN: ${{secrets.NPM_TOKEN}}
