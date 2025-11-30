@@ -1,0 +1,78 @@
+================================================================================
+Nested object
+================================================================================
+user:
+  name: Alice
+  age: 30
+--------------------------------------------------------------------------------
+
+(document
+  (object
+    (pair
+      key: (key
+        (identifier))
+      value: (object
+        (pair
+          key: (key
+            (identifier))
+          value: (unquoted_string))
+        (pair
+          key: (key
+            (identifier))
+          value: (number))))))
+
+================================================================================
+Deeply nested object
+================================================================================
+config:
+  server:
+    host: localhost
+    port: 8080
+--------------------------------------------------------------------------------
+
+(document
+  (object
+    (pair
+      key: (key
+        (identifier))
+      value: (object
+        (pair
+          key: (key
+            (identifier))
+          value: (object
+            (pair
+              key: (key
+                (identifier))
+              value: (unquoted_string))
+            (pair
+              key: (key
+                (identifier))
+              value: (number))))))))
+
+================================================================================
+Dotted key
+================================================================================
+user.name: Alice
+--------------------------------------------------------------------------------
+
+(document
+  (object
+    (pair
+      key: (key
+        (dotted_key
+          (identifier)
+          (identifier)))
+      value: (unquoted_string))))
+
+================================================================================
+Quoted key
+================================================================================
+"special-key": value
+--------------------------------------------------------------------------------
+
+(document
+  (object
+    (pair
+      key: (key
+        (quoted_string))
+      value: (unquoted_string))))

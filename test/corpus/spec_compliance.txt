@@ -1,0 +1,180 @@
+================================================================================
+URL value with colons
+================================================================================
+api.endpoint: https://api.example.com
+--------------------------------------------------------------------------------
+
+(document
+  (object
+    (pair
+      key: (key
+        (dotted_key
+          (identifier)
+          (identifier)))
+      value: (unquoted_string))))
+
+================================================================================
+Version string with multiple dots
+================================================================================
+app.version: 1.0.0
+--------------------------------------------------------------------------------
+
+(document
+  (object
+    (pair
+      key: (key
+        (dotted_key
+          (identifier)
+          (identifier)))
+      value: (unquoted_string))))
+
+================================================================================
+ISO8601 timestamp
+================================================================================
+meta.timestamp: 2025-01-15T10:30:00Z
+--------------------------------------------------------------------------------
+
+(document
+  (object
+    (pair
+      key: (key
+        (dotted_key
+          (identifier)
+          (identifier)))
+      value: (unquoted_string))))
+
+================================================================================
+Mixed key folding and nesting
+================================================================================
+app.name: MyApp
+app.version: 2.1.0
+server:
+  host: localhost
+  port: 8080
+--------------------------------------------------------------------------------
+
+(document
+  (object
+    (pair
+      key: (key
+        (dotted_key
+          (identifier)
+          (identifier)))
+      value: (unquoted_string))
+    (pair
+      key: (key
+        (dotted_key
+          (identifier)
+          (identifier)))
+      value: (unquoted_string))
+    (pair
+      key: (key
+        (identifier))
+      value: (object
+        (pair
+          key: (key
+            (identifier))
+          value: (unquoted_string))
+        (pair
+          key: (key
+            (identifier))
+          value: (number))))))
+
+================================================================================
+Pipe delimiter with field list
+================================================================================
+items[2|]{sku|name}:
+  A1|Widget
+  B2|Gadget
+--------------------------------------------------------------------------------
+
+(document
+  (object
+    (array_declaration
+      key: (key
+        (identifier))
+      (array_header
+        length: (integer)
+        delimiter: (delimiter_marker)
+        fields: (field_list
+          (field_name
+            (identifier))
+          (field_delimiter)
+          (field_name
+            (identifier))))
+      content: (array_content
+        (tabular_row
+          (unquoted_string)
+          (delimiter)
+          (unquoted_string))
+        (tabular_row
+          (unquoted_string)
+          (delimiter)
+          (unquoted_string))))))
+
+================================================================================
+Tab delimiter with field list
+================================================================================
+data[2	]{name	age}:
+  Alice	30
+  Bob	25
+--------------------------------------------------------------------------------
+
+(document
+  (object
+    (array_declaration
+      key: (key
+        (identifier))
+      (array_header
+        length: (integer)
+        delimiter: (delimiter_marker)
+        fields: (field_list
+          (field_name
+            (identifier))
+          (field_delimiter)
+          (field_name
+            (identifier))))
+      content: (array_content
+        (tabular_row
+          (unquoted_string)
+          (delimiter)
+          (number))
+        (tabular_row
+          (unquoted_string)
+          (delimiter)
+          (number))))))
+
+================================================================================
+Mixed array with objects in list items
+================================================================================
+items[3]:
+  - 1
+  - a: hello
+    b: world
+  - text value
+--------------------------------------------------------------------------------
+
+(document
+  (object
+    (array_declaration
+      key: (key
+        (identifier))
+      (array_header
+        length: (integer))
+      content: (array_content
+        (list_item
+          (list_marker)
+          value: (number))
+        (list_item
+          (list_marker)
+          key: (key
+            (identifier))
+          value: (unquoted_string)
+          (object
+            (pair
+              key: (key
+                (identifier))
+              value: (unquoted_string))))
+        (list_item
+          (list_marker)
+          value: (unquoted_string))))))

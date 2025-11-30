@@ -1,0 +1,36 @@
+{
+  "grammars": [
+    {
+      "name": "toon",
+      "camelcase": "Toon",
+      "scope": "source.toon",
+      "path": ".",
+      "file-types": [
+        "toon"
+      ],
+      "highlights": "queries/highlights.scm",
+      "injection-regex": "^toon$"
+    }
+  ],
+  "metadata": {
+    "version": "0.1.0",
+    "license": "MIT",
+    "description": "Tree-sitter grammar for TOON (Token-Oriented Object Notation)",
+    "authors": [
+      {
+        "name": "Your Name"
+      }
+    ],
+    "links": {
+      "repository": "https://github.com/your-username/tree-sitter-toon"
+    }
+  },
+  "bindings": {
+    "c": true,
+    "go": true,
+    "node": true,
+    "python": true,
+    "rust": true,
+    "swift": true
+  }
+}

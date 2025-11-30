@@ -1,0 +1,33 @@
+{
+  "name": "tree-sitter-toon",
+  "version": "0.1.0",
+  "description": "Tree-sitter grammar for TOON (Token-Oriented Object Notation)",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/your-username/tree-sitter-toon"
+  },
+  "license": "MIT",
+  "author": "Your Name",
+  "keywords": [
+    "tree-sitter",
+    "parser",
+    "toon",
+    "json",
+    "data-format"
+  ],
+  "files": [
+    "grammar.js",
+    "queries/*",
+    "src/**"
+  ],
+  "devDependencies": {
+    "tree-sitter-cli": "^0.24.0"
+  },
+  "scripts": {
+    "generate": "tree-sitter generate",
+    "build": "tree-sitter generate",
+    "test": "tree-sitter test",
+    "parse": "tree-sitter parse",
+    "highlight": "tree-sitter highlight"
+  }
+}

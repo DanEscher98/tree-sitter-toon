@@ -1,0 +1,204 @@
+================================================================================
+Inline array with numbers
+================================================================================
+values[3]: 1,2,3
+--------------------------------------------------------------------------------
+
+(document
+  (object
+    (array_declaration
+      key: (key
+        (identifier))
+      (array_header
+        length: (integer))
+      values: (inline_values
+        (number)
+        (delimiter)
+        (number)
+        (delimiter)
+        (number)))))
+
+================================================================================
+Inline array with strings
+================================================================================
+items[2]: foo,bar
+--------------------------------------------------------------------------------
+
+(document
+  (object
+    (array_declaration
+      key: (key
+        (identifier))
+      (array_header
+        length: (integer))
+      values: (inline_values
+        (unquoted_string)
+        (delimiter)
+        (unquoted_string)))))
+
+================================================================================
+Tabular array
+================================================================================
+items[2]:
+  1
+  2
+--------------------------------------------------------------------------------
+
+(document
+  (object
+    (array_declaration
+      key: (key
+        (identifier))
+      (array_header
+        length: (integer))
+      content: (array_content
+        (tabular_row
+          (number))
+        (tabular_row
+          (number))))))
+
+================================================================================
+List array with numbers
+================================================================================
+items[2]:
+  - 1
+  - 2
+--------------------------------------------------------------------------------
+
+(document
+  (object
+    (array_declaration
+      key: (key
+        (identifier))
+      (array_header
+        length: (integer))
+      content: (array_content
+        (list_item
+          (list_marker)
+          value: (number))
+        (list_item
+          (list_marker)
+          value: (number))))))
+
+================================================================================
+List array with strings
+================================================================================
+items[2]:
+  - one
+  - two
+--------------------------------------------------------------------------------
+
+(document
+  (object
+    (array_declaration
+      key: (key
+        (identifier))
+      (array_header
+        length: (integer))
+      content: (array_content
+        (list_item
+          (list_marker)
+          value: (unquoted_string))
+        (list_item
+          (list_marker)
+          value: (unquoted_string))))))
+
+================================================================================
+Array with field list
+================================================================================
+users[2]{name,age}:
+  Alice,30
+  Bob,25
+--------------------------------------------------------------------------------
+
+(document
+  (object
+    (array_declaration
+      key: (key
+        (identifier))
+      (array_header
+        length: (integer)
+        fields: (field_list
+          (field_name
+            (identifier))
+          (field_delimiter)
+          (field_name
+            (identifier))))
+      content: (array_content
+        (tabular_row
+          (unquoted_string)
+          (delimiter)
+          (number))
+        (tabular_row
+          (unquoted_string)
+          (delimiter)
+          (number))))))
+
+================================================================================
+Root array
+================================================================================
+[3]: 1,2,3
+--------------------------------------------------------------------------------
+
+(document
+  (root_array
+    (array_header
+      length: (integer))
+    values: (inline_values
+      (number)
+      (delimiter)
+      (number)
+      (delimiter)
+      (number))))
+
+================================================================================
+Array with tab delimiter marker
+================================================================================
+data[2	]:
+  a	b
+  c	d
+--------------------------------------------------------------------------------
+
+(document
+  (object
+    (array_declaration
+      key: (key
+        (identifier))
+      (array_header
+        length: (integer)
+        delimiter: (delimiter_marker))
+      content: (array_content
+        (tabular_row
+          (unquoted_string)
+          (delimiter)
+          (unquoted_string))
+        (tabular_row
+          (unquoted_string)
+          (delimiter)
+          (unquoted_string))))))
+
+================================================================================
+Array with pipe delimiter marker
+================================================================================
+data[2|]:
+  a|b
+  c|d
+--------------------------------------------------------------------------------
+
+(document
+  (object
+    (array_declaration
+      key: (key
+        (identifier))
+      (array_header
+        length: (integer)
+        delimiter: (delimiter_marker))
+      content: (array_content
+        (tabular_row
+          (unquoted_string)
+          (delimiter)
+          (unquoted_string))
+        (tabular_row
+          (unquoted_string)
+          (delimiter)
+          (unquoted_string))))))

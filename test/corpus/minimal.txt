@@ -1,0 +1,12 @@
+==================
+Simple test
+==================
+name: Alice
+---
+
+(document
+  (object
+    (pair
+      key: (key
+        (identifier))
+      value: (unquoted_string))))
