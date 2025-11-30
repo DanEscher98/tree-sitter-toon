@@ -1,6 +1,11 @@
 # tree-sitter-toon
 
+[![CI](https://github.com/DanEscher98/tree-sitter-toon/actions/workflows/ci.yml/badge.svg)](https://github.com/DanEscher98/tree-sitter-toon/actions/workflows/ci.yml)
+[![npm](https://img.shields.io/npm/v/@danyiel-colin/tree-sitter-toon)](https://www.npmjs.com/package/@danyiel-colin/tree-sitter-toon)
+
 Tree-sitter grammar for [TOON](https://github.com/toon-format/spec) (Token-Oriented Object Notation).
+
+> **Beta Testing** - This parser is in beta. Please try it out and [report any issues](https://github.com/DanEscher98/tree-sitter-toon/issues)!
 
 ## Features
 
@@ -17,6 +22,26 @@ Tree-sitter grammar for [TOON](https://github.com/toon-format/spec) (Token-Orien
 ## Installation
 
 ### Neovim (with nvim-treesitter)
+
+Add the custom parser configuration to your Neovim config:
+
+```lua
+local parser_config = require("nvim-treesitter.parsers").get_parser_configs()
+parser_config.toon = {
+  install_info = {
+    url = "https://github.com/DanEscher98/tree-sitter-toon",
+    files = { "src/parser.c", "src/scanner.c" },
+    branch = "main",
+  },
+  filetype = "toon",
+}
+```
+
+Then install the parser:
+
+```vim
+:TSInstall toon
+```
 
 #### lazy.nvim
 
@@ -43,57 +68,7 @@ Tree-sitter grammar for [TOON](https://github.com/toon-format/spec) (Token-Orien
 }
 ```
 
-#### packer.nvim
-
-```lua
-use {
-  "nvim-treesitter/nvim-treesitter",
-  run = ":TSUpdate",
-  config = function()
-    local parser_config = require("nvim-treesitter.parsers").get_parser_configs()
-    parser_config.toon = {
-      install_info = {
-        url = "https://github.com/DanEscher98/tree-sitter-toon",
-        files = { "src/parser.c", "src/scanner.c" },
-        branch = "main",
-      },
-      filetype = "toon",
-    }
-
-    require("nvim-treesitter.configs").setup({
-      ensure_installed = { "toon" },
-      highlight = { enable = true },
-    })
-  end,
-}
-```
-
-#### vim-plug
-
-```vim
-Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
-```
-
-Then in your init.lua:
-
-```lua
-local parser_config = require("nvim-treesitter.parsers").get_parser_configs()
-parser_config.toon = {
-  install_info = {
-    url = "https://github.com/DanEscher98/tree-sitter-toon",
-    files = { "src/parser.c", "src/scanner.c" },
-    branch = "main",
-  },
-  filetype = "toon",
-}
-
-require("nvim-treesitter.configs").setup({
-  ensure_installed = { "toon" },
-  highlight = { enable = true },
-})
-```
-
-### File Type Detection
+#### File Type Detection
 
 Add to your Neovim config:
 
@@ -105,11 +80,73 @@ vim.filetype.add({
 })
 ```
 
-### Manual Installation (CLI)
+#### Query Files
+
+Copy the query files to your Neovim config for highlighting, folding, and indentation:
 
 ```bash
+mkdir -p ~/.config/nvim/queries/toon
+cp queries/*.scm ~/.config/nvim/queries/toon/
+```
+
+Or with lazy.nvim, create a small plugin:
+
+```lua
+-- ~/.config/nvim/lua/plugins/toon.lua
+return {
+  dir = "~/.config/nvim/queries/toon",
+  name = "toon-queries",
+  ft = "toon",
+}
+```
+
+### Node.js
+
+```bash
+npm install @danyiel-colin/tree-sitter-toon
+```
+
+```javascript
+const Parser = require("tree-sitter");
+const Toon = require("@danyiel-colin/tree-sitter-toon");
+
+const parser = new Parser();
+parser.setLanguage(Toon);
+
+const tree = parser.parse(`
+name: Alice
+age: 30
+`);
+console.log(tree.rootNode.toString());
+```
+
+### Rust
+
+Add to your `Cargo.toml`:
+
+```toml
+[dependencies]
+tree-sitter-toon = { git = "https://github.com/DanEscher98/tree-sitter-toon" }
+```
+
+```rust
+use tree_sitter::Parser;
+
+fn main() {
+    let mut parser = Parser::new();
+    parser.set_language(&tree_sitter_toon::LANGUAGE.into()).unwrap();
+
+    let tree = parser.parse("name: hello\n", None).unwrap();
+    println!("{}", tree.root_node().to_sexp());
+}
+```
+
+### CLI
+
+```bash
+git clone https://github.com/DanEscher98/tree-sitter-toon
+cd tree-sitter-toon
 npm install
-npm run generate
 npm test
 ```
 
@@ -125,6 +162,12 @@ npx tree-sitter parse example.toon
 
 ```bash
 npm test
+```
+
+### Playground
+
+```bash
+npm run start
 ```
 
 ## Example
@@ -153,16 +196,21 @@ config:
 
 ## Query Files
 
-The grammar includes query files for full nvim-treesitter integration:
+The grammar includes query files for full editor integration:
 
-### highlights.scm
+| File | Purpose |
+|------|---------|
+| `highlights.scm` | Syntax highlighting |
+| `folds.scm` | Code folding |
+| `indents.scm` | Auto-indentation |
+| `locals.scm` | Scope/definition tracking |
 
-Syntax highlighting with standard Neovim capture groups:
+### Highlight Captures
 
 | Node Type | Capture Group |
 |-----------|---------------|
 | `null`, `true`, `false` | `@constant.builtin`, `@boolean` |
-| `number`, `integer` | `@number` |
+| `number` | `@number` |
 | `quoted_string`, `unquoted_string` | `@string` |
 | `escape_sequence` | `@string.escape` |
 | `identifier` (in keys) | `@property` |
@@ -170,27 +218,9 @@ Syntax highlighting with standard Neovim capture groups:
 | `[`, `]`, `{`, `}` | `@punctuation.bracket` |
 | `-` (list marker) | `@punctuation.special` |
 
-### folds.scm
+## Contributing
 
-Code folding support for:
-- Nested objects (`pair` with `object` value)
-- Array declarations with content
-- Root arrays with content
-- List items with nested objects
-
-### indents.scm
-
-Auto-indentation for:
-- Nested objects
-- Array content blocks
-- List items with nested content
-
-### locals.scm
-
-Scope and definition tracking for:
-- Objects as scopes
-- Keys as local definitions
-- Field names as definitions
+Issues and PRs welcome! Please [report any parsing issues](https://github.com/DanEscher98/tree-sitter-toon/issues) you encounter.
 
 ## License
 
