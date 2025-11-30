@@ -1,45 +1,78 @@
 ; highlights.scm - Syntax highlighting queries for TOON
 ; Maps grammar nodes to standard Neovim highlight capture groups
+; Reference: https://github.com/nvim-treesitter/nvim-treesitter/blob/master/CONTRIBUTING.md
 
-; Keywords/Constants
+; Literals
+; --------
+
 (null) @constant.builtin
 (true) @boolean
 (false) @boolean
-
-; Numbers
 (number) @number
 (integer) @number
 
 ; Strings
 (quoted_string) @string
-(escape_sequence) @string.escape
 (unquoted_string) @string
+(escape_sequence) @string.escape
 
-; Keys and identifiers
-(key (identifier) @property)
-(key (dotted_key (identifier) @property))
-(key (quoted_string) @property)
-(field_name) @property
+; Properties/Keys
+; ---------------
+
+; Object keys
+(pair
+  key: (key
+    (identifier) @property))
+
+(pair
+  key: (key
+    (dotted_key
+      (identifier) @property)))
+
+(pair
+  key: (key
+    (quoted_string) @property))
+
+; Array declaration keys
+(array_declaration
+  key: (key
+    (identifier) @property))
+
+(array_declaration
+  key: (key
+    (dotted_key
+      (identifier) @property)))
+
+; Field names in tabular arrays
+(field_name
+  (identifier) @property)
+
+(field_name
+  (quoted_string) @property)
+
+; List item keys (objects as list items)
+(list_item
+  key: (key
+    (identifier) @property))
 
 ; Punctuation
+; -----------
+
+; Delimiters
 ":" @punctuation.delimiter
 "," @punctuation.delimiter
 "|" @punctuation.delimiter
 "." @punctuation.delimiter
+(delimiter) @punctuation.delimiter
+(field_delimiter) @punctuation.delimiter
+(delimiter_marker) @punctuation.delimiter
 
 ; Brackets
 "[" @punctuation.bracket
 "]" @punctuation.bracket
 "{" @punctuation.bracket
 "}" @punctuation.bracket
+
+; Special
 "\"" @punctuation.special
-
-; List marker
 (list_marker) @punctuation.special
-
-; Array header length
-(array_header
-  (integer) @number)
-
-; Delimiter marker in array header
-(delimiter_marker) @punctuation.delimiter

@@ -80,7 +80,7 @@ Then in your init.lua:
 local parser_config = require("nvim-treesitter.parsers").get_parser_configs()
 parser_config.toon = {
   install_info = {
-    url = "https://github.com/YOUR_USERNAME/tree-sitter-toon",
+    url = "https://github.com/DanEscher98/tree-sitter-toon",
     files = { "src/parser.c", "src/scanner.c" },
     branch = "main",
   },
@@ -151,9 +151,13 @@ config:
     - metrics
 ```
 
-## Syntax Highlighting
+## Query Files
 
-The grammar includes highlight queries in `queries/highlights.scm` that map to standard Neovim capture groups:
+The grammar includes query files for full nvim-treesitter integration:
+
+### highlights.scm
+
+Syntax highlighting with standard Neovim capture groups:
 
 | Node Type | Capture Group |
 |-----------|---------------|
@@ -165,6 +169,28 @@ The grammar includes highlight queries in `queries/highlights.scm` that map to s
 | `:`, `,`, `\|`, `.` | `@punctuation.delimiter` |
 | `[`, `]`, `{`, `}` | `@punctuation.bracket` |
 | `-` (list marker) | `@punctuation.special` |
+
+### folds.scm
+
+Code folding support for:
+- Nested objects (`pair` with `object` value)
+- Array declarations with content
+- Root arrays with content
+- List items with nested objects
+
+### indents.scm
+
+Auto-indentation for:
+- Nested objects
+- Array content blocks
+- List items with nested content
+
+### locals.scm
+
+Scope and definition tracking for:
+- Objects as scopes
+- Keys as local definitions
+- Field names as definitions
 
 ## License
 
